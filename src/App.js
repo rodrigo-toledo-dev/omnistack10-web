@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
-import './global.css';
+import React from 'react';
+
 import './App.css';
-import Header from './Header';
+import './global.css';
+import './main.css';
+import './sidebar.css';
+
 
 function App() {
-  const [counter, setCounter] = useState(0)
 
   return (
     <div id="app">
       <aside>
-        <strong></strong>
+        <strong>Cadastrar</strong>
         <form>
           <div class="input-block">
             <label htmlFor="github_username">Usuário do github</label>
@@ -21,13 +23,80 @@ function App() {
           </div>
           
           <div class="input-group">
-            <label htmlFor="username_github">Usuário do github</label>
-            <input name="username_github" id="username_github" required  />
+            <div class="input-block">
+              <label htmlFor="latitude">Latitude</label>
+              <input name="latitude" id="latitude" required  />
+            </div>
+
+            <div class="input-block">
+              <label htmlFor="longitude">Longitude</label>
+              <input name="longitude" id="longitude" required  />
+            </div>
           </div>
+          <button type="submit">Salvar</button>
         </form>
         
       </aside>
-      <main></main>
+      <main>
+        <ul>
+          <li className="dev-item">
+            <header>
+              <img src="https://picsum.photos/200/200" alt="" />
+              <div className="user-info">
+                <strong>Rodrigo</strong>
+                <span>techs</span>
+              </div>
+            </header>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean cursus, nisi eget facilisis suscipit, lectus nunc tincidunt turpis, euismod malesuada justo est posuere leo. Sed sed leo imperdiet, pharetra quam quis, vehicula dolor
+            </p>
+            <a href="#">Acessar perfil github</a>
+          </li>
+
+          <li className="dev-item">
+            <header>
+              <img src="https://picsum.photos/200/200" alt="" />
+              <div className="user-info">
+                <strong>Rodrigo</strong>
+                <span>techs</span>
+              </div>
+            </header>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean cursus, nisi eget facilisis suscipit, lectus nunc tincidunt turpis, euismod malesuada justo est posuere leo. Sed sed leo imperdiet, pharetra quam quis, vehicula dolor
+            </p>
+            <a href="#">Acessar perfil github</a>
+          </li>
+
+          <li className="dev-item">
+            <header>
+              <img src="https://picsum.photos/200/200" alt="" />
+              <div className="user-info">
+                <strong>Rodrigo</strong>
+                <span>techs</span>
+              </div>
+            </header>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean cursus, nisi eget facilisis suscipit, lectus nunc tincidunt turpis, euismod malesuada justo est posuere leo. Sed sed leo imperdiet, pharetra quam quis, vehicula dolor
+            </p>
+            <a href="#">Acessar perfil github</a>
+          </li>
+
+          <li className="dev-item">
+            <header>
+              <img src="https://picsum.photos/200/200" alt="" />
+              <div className="user-info">
+                <strong>Rodrigo</strong>
+                <span>techs</span>
+              </div>
+            </header>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean cursus, nisi eget facilisis suscipit, lectus nunc tincidunt turpis, euismod malesuada justo est posuere leo. Sed sed leo imperdiet, pharetra quam quis, vehicula dolor
+            </p>
+            <a href="#">Acessar perfil github</a>
+          </li>
+          
+        </ul>
+      </main>
     </div>
   );
 }
