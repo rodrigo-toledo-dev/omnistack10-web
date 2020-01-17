@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react';
+import api from './services/api'
+import DevItem from './components/DevItem'
 
 import './App.css';
 import './global.css';
@@ -10,9 +12,20 @@ function App() {
 
   const [github_username, setGithubUsername] = useState('');
   const [techs, setTechs] = useState('');
+  const [devs, setDevs] = useState([]);
 
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
+
+  useEffect(() =>{
+    async function loadDevs(){
+      const response = await api.get('/devs');
+
+      setDevs(response.data)
+    }
+
+    loadDevs()
+  }, [])
 
   useEffect(() =>{
     navigator.geolocation.getCurrentPosition(
@@ -30,13 +43,32 @@ function App() {
       }
     );
   },
-  [])
+  []);
+
+
+  async function handleAddDev(e){
+    e.preventDefault();
+
+    console.log('aki')
+
+    const response = await api.post('/devs', {
+      github_username,
+      techs,
+      latitude,
+      longitude
+    })
+
+    setGithubUsername('')
+    setTechs('')
+
+    setDevs([...devs, response.data]);
+  }
 
   return (
     <div id="app">
       <aside>
         <strong>Cadastrar</strong>
-        <form>
+        <form onSubmit={handleAddDev}>
           <div className="input-block">
             <label htmlFor="github_username">Usuário do github</label>
             <input name="github_username" id="github_username" value={github_username} required onChange={e => setGithubUsername(e.target.value)} />
@@ -54,7 +86,7 @@ function App() {
 
             <div className="input-block">
               <label htmlFor="longitude">Longitude</label>
-              <input type="number" name="longitude" id="longitude" required value={longitude} onChange={e => setLatitude(e.target.value)} />
+              <input type="number" name="longitude" id="longitude" required value={longitude} onChange={e => setLongitude(e.target.value)} />
             </div>
           </div>
           <button type="submit">Salvar</button>
@@ -63,61 +95,7 @@ function App() {
       </aside>
       <main>
         <ul>
-          <li className="dev-item">
-            <header>
-              <img src="https://picsum.photos/200/200" alt="" />
-              <div className="user-info">
-                <strong>Rodrigo</strong>
-                <span>techs</span>
-              </div>
-            </header>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean cursus, nisi eget facilisis suscipit, lectus nunc tincidunt turpis, euismod malesuada justo est posuere leo. Sed sed leo imperdiet, pharetra quam quis, vehicula dolor
-            </p>
-            <a href="#">Acessar perfil github</a>
-          </li>
-
-          <li className="dev-item">
-            <header>
-              <img src="https://picsum.photos/200/200" alt="" />
-              <div className="user-info">
-                <strong>Rodrigo</strong>
-                <span>techs</span>
-              </div>
-            </header>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean cursus, nisi eget facilisis suscipit, lectus nunc tincidunt turpis, euismod malesuada justo est posuere leo. Sed sed leo imperdiet, pharetra quam quis, vehicula dolor
-            </p>
-            <a href="#">Acessar perfil github</a>
-          </li>
-
-          <li className="dev-item">
-            <header>
-              <img src="https://picsum.photos/200/200" alt="" />
-              <div className="user-info">
-                <strong>Rodrigo</strong>
-                <span>techs</span>
-              </div>
-            </header>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean cursus, nisi eget facilisis suscipit, lectus nunc tincidunt turpis, euismod malesuada justo est posuere leo. Sed sed leo imperdiet, pharetra quam quis, vehicula dolor
-            </p>
-            <a href="#">Acessar perfil github</a>
-          </li>
-
-          <li className="dev-item">
-            <header>
-              <img src="https://picsum.photos/200/200" alt="" />
-              <div className="user-info">
-                <strong>Rodrigo</strong>
-                <span>techs</span>
-              </div>
-            </header>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean cursus, nisi eget facilisis suscipit, lectus nunc tincidunt turpis, euismod malesuada justo est posuere leo. Sed sed leo imperdiet, pharetra quam quis, vehicula dolor
-            </p>
-            <a href="#">Acessar perfil github</a>
-          </li>
+          {devs.map(dev=>(<DevItem key={dev._id} dev={dev} />))}
           
         </ul>
       </main>
